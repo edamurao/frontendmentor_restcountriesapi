@@ -1,4 +1,5 @@
 import { Container, CssBaseline, makeStyles, ThemeProvider } from '@material-ui/core';
+import ContentComponent from './components/content';
 import HeaderComponent from './components/header';
 import darkTheme from './darktheme';
 
@@ -16,6 +17,7 @@ function App() {
       <CssBaseline />
       <Container className={classes.container}>
         <HeaderComponent />
+        <ContentComponent />
       </Container>
     </ThemeProvider>    
   );
