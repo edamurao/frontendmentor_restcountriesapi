@@ -7,11 +7,10 @@ const darkTheme = createTheme({
             'Nunito Sans', 'sans-serif'
         ].join(','),
         fontWeightMedium: 600,
-        fontWeightBold: 800,
+        fontWeightBold: 800,  
         h6: {
-            fontSize: '1.25rem',
-            fontWeight: 600
-        }
+            fontWeight: 800
+        }      
     },
     palette: {
         background: {
@@ -22,15 +21,9 @@ const darkTheme = createTheme({
         },
         primary: {
             main: 'hsl(209, 23%, 22%)',
-            
         },
-    },    
-    overrides: {
-        MuiToolbar: {
-            root: {
-                backgroundColor: 'hsl(209, 23%, 22%)',
-            }
-        },
+    },
+    overrides: {        
         MuiPaper: {
             root: {
                 backgroundColor: 'hsl(209, 23%, 22%)',
@@ -50,7 +43,7 @@ const darkTheme = createTheme({
             root: {
                 color: 'hsl(0, 0%, 100%)',
                 fontSize: 14
-            },            
+            },
         },
         MuiSelect: {
             icon: {
@@ -67,6 +60,16 @@ const darkTheme = createTheme({
             root: {
                 borderRadius: 8
             }
+        },
+        MuiDialogContent: {
+            root: {
+                backgroundColor: 'hsl(207, 26%, 17%)',                
+            }
+        },
+        MuiButton: {
+            root: {
+                textTransform: 'initial',                
+            },
         }
     }
 });

@@ -106,7 +106,7 @@ export default function ContentComponent(props) {
                     </TextField>
                 </Grid>
                 <Grid item xs={12}>
-                    {countries.map((item, index) => (
+                    {countries.slice(0, 10).map((item, index) => (
                         <CountryListItemComponent
                             key={index}
                             data={item} />
