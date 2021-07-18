@@ -82,7 +82,7 @@ export default function CountryListItemComponent(props) {
                         onClick={() => setOpenViewDetail(false)}>Back</Button>
                 </div>
                 <CountryDetailViewComponent
-                    data={props.data}
+                    alpha3Code ={props.data.alpha3Code}
                 />
             </DialogContent>
         </Dialog>

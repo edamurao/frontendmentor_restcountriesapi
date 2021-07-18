@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { FormControl, InputAdornment, makeStyles, MenuItem, TextField, Grid } from "@material-ui/core";
 import { Search } from "@material-ui/icons";
-import axios from "axios";
 import CustomLoader from "./loader";
 import CountryListItemComponent from "./country_list_item";
+import { useDispatch, useSelector } from "react-redux";
+import { countryAPI, filterByRegion, search } from "../countryReducer";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -31,43 +32,29 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function ContentComponent(props) {
     const classes = useStyles();
-    const [selectedRegion, setSelectedRegion] = useState('all');
-    const [countries, setCountries] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const dispatch = useDispatch();
+    const countries = useSelector((state) => state.data);
+    const isLoading = useSelector((state) => state.isLoading);
+    const [selectedRegion, setSelectedRegion] = useState('all');    
     const regions = [
         { name: 'Africa', filter: 'africa' },
         { name: 'America', filter: 'americas' },
         { name: 'Asia', filter: 'asia' },
         { name: 'Europe', filter: 'europe' },
-        { name: 'Oceana', filter: 'oceana' },
+        { name: 'Oceania', filter: 'oceania' },
     ];
 
     useEffect(() => {
-        const filter = '?fields=name;nativeName;population;region;subregion;capital;topLevelDomain;currencies;languages;borders;flag'
-        if (selectedRegion === 'all') {
-            setLoading(true);            
-            axios.get('https://restcountries.eu/rest/v2/all' + filter)
-                .then(r => {
-                    if (r.status === 200) {
-                        setCountries(r.data);
-                        setLoading(false);
-                    }
-                });
-        }
-        else {
-            setLoading(true);
-            axios.get('https://restcountries.eu/rest/v2/region/' + selectedRegion + filter)
-                .then(r => {
-                    if (r.status === 200) {                        
-                        setCountries(r.data);
-                        setLoading(false);
-                    }
-                });
-        }
-    }, [selectedRegion]);
+        dispatch(countryAPI());
+    }, []);
 
     const handleSelectRegionChange = (e) => {
         setSelectedRegion(e.target.value);
+        dispatch(filterByRegion(e.target.value));
+    }
+
+    const handleSearchOnChange = e => {
+        dispatch(search(e.target.value));
     }
 
     return (
@@ -80,6 +67,7 @@ export default function ContentComponent(props) {
                             id='search-country'
                             placeholder='Search for a country...'
                             autoComplete='off'
+                            onChange={handleSearchOnChange}
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position='start'>
@@ -110,11 +98,11 @@ export default function ContentComponent(props) {
                         <CountryListItemComponent
                             key={index}
                             data={item} />
-                    ))}
+                    ))}                    
                 </Grid>
             </Grid>
             <CustomLoader 
-                show={loading}
+                show={isLoading}
             />            
         </div>
     );
