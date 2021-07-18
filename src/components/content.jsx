@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { FormControl, InputAdornment, makeStyles, MenuItem, TextField, Grid, Button, Box } from "@material-ui/core";
+import { FormControl, InputAdornment, makeStyles, MenuItem, TextField, Grid, Button, Box, Fab } from "@material-ui/core";
 import { Search } from "@material-ui/icons";
 import CustomLoader from "./loader";
 import CountryListItemComponent from "./country_list_item";
 import { useDispatch, useSelector } from "react-redux";
 import { countryAPI, filterByRegion, search } from "../countryReducer";
 import { concat, slice } from "lodash";
+import ScrollToTop from "react-scroll-up";
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -121,12 +123,9 @@ export default function ContentComponent(props) {
                 </Grid>
                 <Grid item xs={12}>
                     {countryList.map((item, index) => (
-                        <React.Fragment>
-                            <CountryListItemComponent
-                                key={index}
-                                data={item} />
-                            <div key={index}><center>{index + 1}</center></div>
-                        </React.Fragment>
+                        <CountryListItemComponent
+                            key={index}
+                            data={item} />
                     ))}
                 </Grid>
                 {index < (countries.length - 1) && (<Grid item xs={12}>
@@ -137,7 +136,12 @@ export default function ContentComponent(props) {
                             size='small'>Load More</Button>
                     </Box>
                 </Grid>)}
-            </Grid>            
+            </Grid>
+            <ScrollToTop showUnder={160}>
+                <Fab color='primary'>
+                    <KeyboardArrowUpIcon />
+                </Fab>
+            </ScrollToTop>
             <CustomLoader
                 show={isLoading}
             />
