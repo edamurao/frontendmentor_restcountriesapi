@@ -7,6 +7,10 @@ const useStyles = makeStyles((theme) => ({
   container: {
     paddingLeft: 0,
     paddingRight: 0,
+    maxWidth: 1440,
+    [theme.breakpoints.up('md')]: {
+      padding: theme.spacing(0, 10)
+    }
   }
 }))
 
@@ -15,8 +19,8 @@ function App() {
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
-      <Container className={classes.container}>
-        <HeaderComponent />
+      <HeaderComponent />
+      <Container className={classes.container}>        
         <ContentComponent />
       </Container>
     </ThemeProvider>    

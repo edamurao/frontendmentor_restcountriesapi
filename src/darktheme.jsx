@@ -9,7 +9,8 @@ const darkTheme = createTheme({
         fontWeightMedium: 600,
         fontWeightBold: 800,  
         h6: {
-            fontWeight: 800
+            fontWeight: 800,
+            fontSize: '1.15rem'
         }      
     },
     palette: {

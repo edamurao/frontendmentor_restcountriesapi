@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FormControl, InputAdornment, makeStyles, MenuItem, TextField, Grid, Button, Box, Fab } from "@material-ui/core";
+import { FormControl, InputAdornment, makeStyles, MenuItem, TextField, Grid, Button, Box, Fab, useTheme, useMediaQuery } from "@material-ui/core";
 import { Search } from "@material-ui/icons";
 import CustomLoader from "./loader";
 import CountryListItemComponent from "./country_list_item";
@@ -11,7 +11,22 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        padding: theme.spacing(3, 2)
+        padding: theme.spacing(3, 2),
+        [theme.breakpoints.up('md')]: {
+            padding: theme.spacing(6, 0),
+        },
+    },
+    listContainer: {
+        justifyContent: 'center',
+        '& .MuiGrid-item': {
+            maxWidth: 265,
+        },
+        [theme.breakpoints.up('sm')]: {
+            justifyContent: 'space-around'
+        },
+        [theme.breakpoints.up('md')]: {
+            justifyContent: 'space-between'
+        },
     },
     search: {
         '& input': {
@@ -21,12 +36,15 @@ const useStyles = makeStyles((theme) => ({
         '& .MuiInputAdornment-positionStart': {
             margin: theme.spacing(0, 3),
         },
-
-        marginBottom: theme.spacing(4)
+        marginBottom: theme.spacing(4),
     },
     select: {
         '& .MuiInputLabel-root': {
             paddingLeft: theme.spacing(2),
+        },
+        '& .MuiSelect-root': {
+            paddingTop: theme.spacing(3),
+            paddingBottom: theme.spacing(3),
         },
     },
     selectItem: {
@@ -41,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 export default function ContentComponent(props) {
-    const LIMIT = 10;
+    const LIMIT = 8;
     const classes = useStyles();
     const dispatch = useDispatch();
     const countries = useSelector((state) => state.data);
@@ -56,6 +74,10 @@ export default function ContentComponent(props) {
         { name: 'Europe', filter: 'europe' },
         { name: 'Oceania', filter: 'oceania' },
     ];
+
+    const theme = useTheme();
+    const mdView = useMediaQuery(theme.breakpoints.up('md'));
+    const smView = useMediaQuery(theme.breakpoints.up('sm'));
 
     useEffect(() => {
         dispatch(countryAPI());
@@ -87,8 +109,9 @@ export default function ContentComponent(props) {
 
     return (
         <div className={classes.root}>
-            <Grid container>
-                <Grid item xs={12}>
+            <Grid container
+                justifyContent='space-between'>
+                <Grid item xs={12} md={4}>
                     <FormControl fullWidth
                         className={classes.search}>
                         <TextField variant='outlined'
@@ -96,6 +119,7 @@ export default function ContentComponent(props) {
                             placeholder='Search for a country...'
                             autoComplete='off'
                             onChange={handleSearchOnChange}
+                            size='small'
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position='start'>
@@ -106,7 +130,7 @@ export default function ContentComponent(props) {
                         />
                     </FormControl>
                 </Grid>
-                <Grid item xs={7}>
+                <Grid item xs={7} md={2}>
                     <TextField
                         variant='outlined'
                         fullWidth
@@ -121,22 +145,25 @@ export default function ContentComponent(props) {
                         ))}
                     </TextField>
                 </Grid>
-                <Grid item xs={12}>
-                    {countryList.map((item, index) => (
-                        <CountryListItemComponent
-                            key={index}
-                            data={item} />
-                    ))}
-                </Grid>
-                {index < (countries.length - 1) && (<Grid item xs={12}>
-                    <Box className={classes.loadMoreContainer}
-                        onClick={handleLoadMoreClick}>
-                        <Button variant='contained'
-                            color='primary'
-                            size='small'>Load More</Button>
-                    </Box>
-                </Grid>)}
             </Grid>
+            <Grid container
+                className={classes.listContainer}>
+                {countryList.map((item, index) => (
+                    <Grid key={index}
+                        item xs={12} sm={6} md={4} lg={3}>
+                        <CountryListItemComponent
+                            data={item} />
+                    </Grid>
+                ))}
+            </Grid>
+            {index < (countries.length - 1) && (
+                <Box className={classes.loadMoreContainer}
+                    onClick={handleLoadMoreClick}>
+                    <Button variant='contained'
+                        color='primary'
+                        size='small'>Load More</Button>
+                </Box>
+            )}
             <ScrollToTop showUnder={160}>
                 <Fab color='primary'>
                     <KeyboardArrowUpIcon />

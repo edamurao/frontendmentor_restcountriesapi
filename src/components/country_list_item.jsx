@@ -6,16 +6,23 @@ import { KeyboardBackspaceSharp } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        width: 280,
+        // width: 280,
         marginTop: theme.spacing(5),
         marginRight: 'auto',
-        marginLeft: 'auto'
+        marginLeft: 'auto',
+        [theme.breakpoints.up('md')]: {
+            marginTop: theme.spacing(2),
+            marginBottom: theme.spacing(3),
+        },
+        [theme.breakpoints.up('lg')]: {
+            marginBottom: theme.spacing(5),
+        }
     },
     media: {
         aspectRatio: '16/9',
     },
     content: {
-        padding: theme.spacing(3, 3, 3, 3),
+        padding: theme.spacing(3, 3, 6, 3),
         '&:last-child': {
             paddingBottom: theme.spacing(6)
         }
@@ -28,8 +35,13 @@ const useStyles = makeStyles((theme) => ({
         lineHeight: 1.75,
         fontWeight: theme.typography.fontWeightMedium,
         '& span': {
-            // color: 'hsl(0, 0%, 74%)',
             fontWeight: theme.typography.fontWeightLight,
+        },
+    },
+    dialogViewContent: {
+        [theme.breakpoints.up('md')]: {
+            paddingLeft: theme.spacing(10),
+            paddingRight: theme.spacing(10),
         },
     },
     viewBackBtnContainer: {
@@ -43,16 +55,18 @@ const useStyles = makeStyles((theme) => ({
             fontSize: 16,
             fontWeight: theme.typography.fontWeightLight
         },
+        [theme.breakpoints.up('md')]: {
+            maxWidth: 1440,
+            marginTop: theme.spacing(5),
+        }
     },
 }))
 
 export default function CountryListItemComponent(props) {
     const classes = useStyles();
     const [openViewDetail, setOpenViewDetail] = useState(false);
-    const [selectedCountry, setSelectedCountry] = useState(null);
 
     const handleViewCountryDetailClick = () => {
-        setSelectedCountry(props.data);
         setOpenViewDetail(true);
     }
 
@@ -73,7 +87,7 @@ export default function CountryListItemComponent(props) {
         </Card>
         <Dialog fullScreen open={openViewDetail}>
             <HeaderComponent />
-            <DialogContent>
+            <DialogContent className={classes.dialogViewContent}>
                 <div className={classes.viewBackBtnContainer}>
                     <Button
                         variant='contained'
@@ -82,7 +96,7 @@ export default function CountryListItemComponent(props) {
                         onClick={() => setOpenViewDetail(false)}>Back</Button>
                 </div>
                 <CountryDetailViewComponent
-                    alpha3Code ={props.data.alpha3Code}
+                    alpha3Code={props.data.alpha3Code}
                 />
             </DialogContent>
         </Dialog>

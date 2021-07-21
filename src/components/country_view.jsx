@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button, CardMedia, Grid, makeStyles, Typography } from "@material-ui/core";
+import { Box, Button, CardMedia, Grid, makeStyles, Typography, useTheme, useMediaQuery } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { getCountryInfo } from "../countryReducer";
 
@@ -8,16 +8,18 @@ const useStyles = makeStyles((theme) => ({
         maxWidth: 375,
         marginLeft: 'auto',
         marginRight: 'auto',
-        fontSize: 16
-    },
-    media: {
-        aspectRatio: '4/3',
-        margin: theme.spacing(8, 0),
-        backgroundSize: 'contain',
+        fontSize: theme.typography.pxToRem(16),
+        [theme.breakpoints.up('md')]: {
+            maxWidth: 1440,
+        }
     },
     title: {
         fontWeight: theme.typography.fontWeightBold,
-        paddingBottom: theme.spacing(2),
+        paddingBottom: theme.spacing(3),
+        [theme.breakpoints.up('md')]: {
+            fontSize: theme.typography.pxToRem(32),
+            paddingBottom: theme.spacing(2),
+        },
     },
     details: {
         lineHeight: 2.25,
@@ -26,15 +28,58 @@ const useStyles = makeStyles((theme) => ({
             fontWeight: theme.typography.fontWeightLight,
         },
     },
-    subDetail: {
-        margin: theme.spacing(5, 0)
+    borderCountryContainer: {
+        [theme.breakpoints.up('md')]: {
+            display: 'flex',
+            marginTop: theme.spacing(6)
+        },
     },
-    borderCountries: {
+    borderCountriesTitle: {
         fontWeight: theme.typography.fontWeightMedium,
+        marginBottom: theme.spacing(3),
+        lineHeight: 2,
+        minWidth: 126.95
     },
     borderCountryBtn: {
-        height: '100%'
-    }
+        height: '100%',
+    },
+    countryInfo: {
+        [theme.breakpoints.up('md')]: {
+            marginTop: theme.spacing(10)
+        },
+    },
+    media: {
+        aspectRatio: '4/3',
+        margin: theme.spacing(8, 0),
+        backgroundSize: 'cover',
+        [theme.breakpoints.up('md')]: {
+            margin: 0,
+            marginRight: theme.spacing(5),
+        },
+        [theme.breakpoints.up('lg')]: {
+            marginRight: theme.spacing(10),
+        }
+    },
+    info: {
+        [theme.breakpoints.up('md')]: {
+            paddingLeft: theme.spacing(5),
+        },
+        [theme.breakpoints.up('lg')]: {
+            paddingLeft: theme.spacing(10),
+        },
+    },    
+    subDetail1: {
+        [theme.breakpoints.up('md')]: {
+
+        },
+    },
+    subDetail2: {
+        margin: theme.spacing(5, 0),
+        [theme.breakpoints.up('md')]: {
+            margin: 0,
+        },
+    },
+
 }));
 
 export default function CountryDetailViewComponent(props) {
@@ -43,6 +88,8 @@ export default function CountryDetailViewComponent(props) {
     const countryInfo = useSelector((state) => state.countryInfo);
     const bordersInfo = useSelector((state) => state.bordersInfo);
     const [info, setInfo] = useState(countryInfo);
+    const theme = useTheme();
+    const mdView = useMediaQuery(theme.breakpoints.up('md'));
 
     useEffect(() => {
         if (props.data !== null) {
@@ -51,48 +98,84 @@ export default function CountryDetailViewComponent(props) {
     }, []);
 
     useEffect(() => {
-        if(countryInfo !== null)
+        if (countryInfo !== null)
             setInfo(countryInfo);
     }, [countryInfo]);
 
-    const handleBorderCountryInfoClick = data => {        
+    const handleBorderCountryInfoClick = data => {
         dispatch(getCountryInfo(data.alpha3Code));
     }
 
+    const BorderInfoComponent = () => {
+        return (<Box className={classes.borderCountryContainer}>
+            <Box mr={2}>
+                <Typography className={classes.borderCountriesTitle} variant={mdView ? 'body1' : 'h6'}>Border Countries:</Typography>
+            </Box>
+            <Box>
+                <Grid container spacing={1}>
+                    {bordersInfo.map((item, index) => (
+                        <Grid key={index} item xs={4} md={6} lg={4}>
+                            <Button
+                                className={classes.borderCountryBtn}
+                                onClick={() => handleBorderCountryInfoClick(item)}
+                                fullWidth
+                                variant='contained'
+                                color='primary'>{item.name}</Button>
+                        </Grid>
+                    ))}
+                </Grid>
+            </Box>
+        </Box>)
+    }
+
+    const MEDIA_GRID_SIZE = 6;
+
     return (<div className={classes.root}>
         {info !== null && (
-            <React.Fragment>
-                <CardMedia
-                    className={classes.media}
-                    image={info.flag} />
-                <Typography className={classes.title} variant='h5'>{info.name}</Typography>
-                <Box className={classes.details}>Native Name:<Box component='span'> {info.nativeName}</Box></Box>
-                <Box className={classes.details}>Population:<Box component='span'> {new Intl.NumberFormat('en-IN').format(info.population)}</Box></Box>
-                <Box className={classes.details}>Region:<Box component='span'> {info.region}</Box></Box>
-                <Box className={classes.details}>Sub Region:<Box component='span'> {info.subregion}</Box></Box>
-                <Box className={classes.details}>Capital:<Box component='span'> {info.capital}</Box></Box>
-                <Box className={classes.subDetail}>
-                    <Box className={classes.details}>Top Level:<Box component='span'> {info.topLevelDomain.join(', ')}</Box></Box>
-                    <Box className={classes.details}>Currencies:<Box component='span'> {info.currencies.map(({ name }) => name).join(', ')}</Box></Box>
-                    <Box className={classes.details}>Languages:<Box component='span'> {info.languages.map(({ name }) => name).join(', ')}</Box></Box>
-                </Box>
-            </React.Fragment>
-        )}
-        {bordersInfo !== null && (
-            <Typography className={classes.borderCountries} variant='h6'>Border Countries:</Typography>
-        )}
-        <Grid container spacing={1}>
-            {bordersInfo !== null && bordersInfo.map((item, index) => (
-                <Grid key={index} item xs={4}>
-                    <Button
-                        className={classes.borderCountryBtn}
-                        onClick={() => handleBorderCountryInfoClick(item)}
-                        fullWidth
-                        variant='contained'
-                        color='primary'>{item.name}</Button>
+            <Grid container
+                className={classes.countryInfo}
+                alignItems='center'>
+                <Grid xs={12} md={6}>
+                    <CardMedia
+                        className={classes.media}
+                        image={info.flag} />
                 </Grid>
-            ))}
-        </Grid>
+                <Grid xs={12} md={6}>
+                    <Grid container
+                        alignItems='center'
+                        className={classes.info}>
+                        <Grid item xs={12}>
+                            <Grid container>
+                                <Grid item xs={12}><Typography className={classes.title} variant='h5'>{info.name}</Typography></Grid>
+                                <Grid item xs={12}>
+                                    <Grid container>
+                                        <Grid item xs={12} md>
+                                            <Box className={classes.subDetail1}>
+                                                <Box className={classes.details}>Native Name:<Box component='span'> {info.nativeName}</Box></Box>
+                                                <Box className={classes.details}>Population:<Box component='span'> {new Intl.NumberFormat('en-IN').format(info.population)}</Box></Box>
+                                                <Box className={classes.details}>Region:<Box component='span'> {info.region}</Box></Box>
+                                                <Box className={classes.details}>Sub Region:<Box component='span'> {info.subregion}</Box></Box>
+                                                <Box className={classes.details}>Capital:<Box component='span'> {info.capital}</Box></Box>
+                                            </Box>
+                                        </Grid>
+                                        <Grid item xs={12} md>
+                                            <Box className={classes.subDetail2}>
+                                                <Box className={classes.details}>Top Level:<Box component='span'> {info.topLevelDomain.join(', ')}</Box></Box>
+                                                <Box className={classes.details}>Currencies:<Box component='span'> {info.currencies.map(({ name }) => name).join(', ')}</Box></Box>
+                                                <Box className={classes.details}>Languages:<Box component='span'> {info.languages.map(({ name }) => name).join(', ')}</Box></Box>
+                                            </Box>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    {bordersInfo !== null && (<BorderInfoComponent />)}
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Grid>
+        )}
 
     </div>)
 }

@@ -6,10 +6,21 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
     },
     toolbar: {
-        minHeight: theme.spacing(11)
+        minHeight: theme.spacing(11),
+        maxWidth: 1440,
+        width: '100%',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        padding: theme.spacing(0, 2),
+        [theme.breakpoints.up('md')]: {
+            padding: theme.spacing(0, 10),
+        },
     },
     title: {
         flexGrow: 1,
+        [theme.breakpoints.up('md')]: {
+            fontSize: theme.typography.h5.fontSize,
+        },
     },
     button: {
         textTransform: 'none',
