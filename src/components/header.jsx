@@ -7,13 +7,19 @@ const useStyles = makeStyles((theme) => ({
     },
     toolbar: {
         minHeight: theme.spacing(11),
-        maxWidth: 1440,
         width: '100%',
         marginLeft: 'auto',
         marginRight: 'auto',
         padding: theme.spacing(0, 2),
+        [theme.breakpoints.up('sm')]: {
+            paddingLeft: theme.spacing(5),
+            paddingRight: theme.spacing(5),
+        },
         [theme.breakpoints.up('md')]: {
             padding: theme.spacing(0, 10),
+        },
+        [theme.breakpoints.up('lg')]: {
+            maxWidth: 1440
         },
     },
     title: {

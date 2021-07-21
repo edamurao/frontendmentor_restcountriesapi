@@ -55,9 +55,16 @@ const useStyles = makeStyles((theme) => ({
             fontSize: 16,
             fontWeight: theme.typography.fontWeightLight
         },
+        [theme.breakpoints.up('sm')]: {
+            maxWidth: 'initial',
+            paddingLeft: theme.spacing(2),
+            paddingRight: theme.spacing(2),
+        },
         [theme.breakpoints.up('md')]: {
             maxWidth: 1440,
             marginTop: theme.spacing(5),
+            paddingLeft: theme.spacing(0),
+            paddingRight: theme.spacing(0),
         }
     },
 }))

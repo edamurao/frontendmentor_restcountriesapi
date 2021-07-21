@@ -5,12 +5,16 @@ import { getCountryInfo } from "../countryReducer";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        maxWidth: 375,
         marginLeft: 'auto',
         marginRight: 'auto',
         fontSize: theme.typography.pxToRem(16),
+        [theme.breakpoints.up('sm')]: {
+            paddingLeft: theme.spacing(2),
+            paddingRight: theme.spacing(2),
+        },
         [theme.breakpoints.up('md')]: {
             maxWidth: 1440,
+            padding: 0,
         }
     },
     title: {
@@ -36,9 +40,15 @@ const useStyles = makeStyles((theme) => ({
     },
     borderCountriesTitle: {
         fontWeight: theme.typography.fontWeightMedium,
-        marginBottom: theme.spacing(3),
+        marginBottom: theme.spacing(2),
         lineHeight: 2,
-        minWidth: 126.95
+        minWidth: 126.95,
+        [theme.breakpoints.up('sm')]: {
+            marginTop: theme.spacing(5),
+        },
+        [theme.breakpoints.up('md')]: {
+            margin: 0
+        }
     },
     borderCountryBtn: {
         height: '100%',
@@ -75,8 +85,8 @@ const useStyles = makeStyles((theme) => ({
     },
     subDetail2: {
         margin: theme.spacing(5, 0),
-        [theme.breakpoints.up('md')]: {
-            margin: 0,
+        [theme.breakpoints.up('sm')]: {
+            margin: 0
         },
     },
 
@@ -134,7 +144,7 @@ export default function CountryDetailViewComponent(props) {
         {info !== null && (
             <Grid container
                 className={classes.countryInfo}
-                alignItems='center'>
+                alignItems='flex-start'>
                 <Grid xs={12} md={6}>
                     <CardMedia
                         className={classes.media}
@@ -149,7 +159,7 @@ export default function CountryDetailViewComponent(props) {
                                 <Grid item xs={12}><Typography className={classes.title} variant='h5'>{info.name}</Typography></Grid>
                                 <Grid item xs={12}>
                                     <Grid container>
-                                        <Grid item xs={12} md>
+                                        <Grid item xs={12} sm md>
                                             <Box className={classes.subDetail1}>
                                                 <Box className={classes.details}>Native Name:<Box component='span'> {info.nativeName}</Box></Box>
                                                 <Box className={classes.details}>Population:<Box component='span'> {new Intl.NumberFormat('en-IN').format(info.population)}</Box></Box>
@@ -158,7 +168,7 @@ export default function CountryDetailViewComponent(props) {
                                                 <Box className={classes.details}>Capital:<Box component='span'> {info.capital}</Box></Box>
                                             </Box>
                                         </Grid>
-                                        <Grid item xs={12} md>
+                                        <Grid item xs={12} sm md>
                                             <Box className={classes.subDetail2}>
                                                 <Box className={classes.details}>Top Level:<Box component='span'> {info.topLevelDomain.join(', ')}</Box></Box>
                                                 <Box className={classes.details}>Currencies:<Box component='span'> {info.currencies.map(({ name }) => name).join(', ')}</Box></Box>
