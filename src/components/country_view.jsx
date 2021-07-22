@@ -55,8 +55,11 @@ const useStyles = makeStyles((theme) => ({
     },
     countryInfo: {
         [theme.breakpoints.up('md')]: {
-            marginTop: theme.spacing(10)
+            marginTop: theme.spacing(10),
         },
+        [theme.breakpoints.up('lg')]: {
+            alignItems: 'center'
+        }
     },
     media: {
         aspectRatio: '4/3',
@@ -77,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up('lg')]: {
             paddingLeft: theme.spacing(10),
         },
-    },    
+    },
     subDetail1: {
         [theme.breakpoints.up('md')]: {
 

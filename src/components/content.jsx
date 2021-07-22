@@ -12,6 +12,10 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 const useStyles = makeStyles((theme) => ({
     root: {
         padding: theme.spacing(3, 2),
+        [theme.breakpoints.up('sm')]: {
+            paddingLeft: theme.spacing(5),
+            paddingRight: theme.spacing(5),
+        },
         [theme.breakpoints.up('md')]: {
             padding: theme.spacing(6, 0),
         },
