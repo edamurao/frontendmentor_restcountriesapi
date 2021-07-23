@@ -141,8 +141,6 @@ export default function CountryDetailViewComponent(props) {
         </Box>)
     }
 
-    const MEDIA_GRID_SIZE = 6;
-
     return (<div className={classes.root}>
         {info !== null && (
             <Grid container

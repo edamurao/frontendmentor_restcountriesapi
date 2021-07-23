@@ -80,8 +80,10 @@ export default function ContentComponent(props) {
     ];
 
     const theme = useTheme();
-    const mdView = useMediaQuery(theme.breakpoints.up('md'));
-    const smView = useMediaQuery(theme.breakpoints.up('sm'));
+    const xsView = useMediaQuery(theme.breakpoints.between('xs', 'xs'));
+    const smView = useMediaQuery(theme.breakpoints.between('sm', 'sm'));
+    const mdView = useMediaQuery(theme.breakpoints.between('md', 'md'));
+    const lgView = useMediaQuery(theme.breakpoints.up('lg'));
 
     useEffect(() => {
         dispatch(countryAPI());
@@ -109,6 +111,35 @@ export default function ContentComponent(props) {
         const newList = concat(countryList, slice(countries, index, newIndex));
         setIndex(newIndex);
         setCountryList(newList);
+    }
+
+    const SpacerComponent = ({ itemsCount }) => {
+        let numOfSpacer = 0;
+        let divisor = 0;
+        let arrSpacer = [];
+
+        const SPACER = () => {
+            return (<Grid item xs={12} sm={6} md={4} lg={3}></Grid>);
+        }
+
+        if (itemsCount !== 0) {
+            if (lgView)
+                divisor = 4;
+            if (mdView)
+                divisor = 3;
+            if (smView)
+                divisor = 2;
+
+            if (((itemsCount / divisor) % 1) !== 0) {
+                numOfSpacer = (1 - (itemsCount / divisor) % 1) * divisor;
+
+                for (let index = 0; index < numOfSpacer; index++) {
+                    arrSpacer.push(<SPACER key={index} />)
+                }
+            }
+        }
+
+        return (<React.Fragment>{arrSpacer}</React.Fragment>)
     }
 
     return (
@@ -159,6 +190,7 @@ export default function ContentComponent(props) {
                             data={item} />
                     </Grid>
                 ))}
+                {!xsView && (<SpacerComponent itemsCount={countryList.length} />)}
             </Grid>
             {index < (countries.length - 1) && (
                 <Box className={classes.loadMoreContainer}
