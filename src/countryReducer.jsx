@@ -26,6 +26,7 @@ const countrySlice = createSlice({
         searchFilter: '',
         data: [],
         error: '',
+        isThemeDark: false
     },
     reducers: {
         filterByRegion: (state, action) => {
@@ -64,6 +65,9 @@ const countrySlice = createSlice({
             else
                 state.bordersInfo = null;
         },
+        changeTheme: (state, action) => {
+            state.isThemeDark = !state.isThemeDark;
+        },
     },
     extraReducers: {
         [countryAPI.fulfilled]: (state, action) => {
@@ -81,6 +85,6 @@ const countrySlice = createSlice({
     }
 });
 
-export const { filterByRegion, search, getCountryInfo } = countrySlice.actions;
+export const { filterByRegion, search, getCountryInfo, changeTheme } = countrySlice.actions;
 
 export default countrySlice.reducer;

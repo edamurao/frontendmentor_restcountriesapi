@@ -85,10 +85,10 @@ export default function CountryListItemComponent(props) {
                     image={props.data.flag}
                 />
                 <CardContent className={classes.content}>
-                    <Box className={classes.title}><Typography variant='h6'>{props.data.name}</Typography></Box>
-                    <Box className={classes.details}>Population: <Box component='span'>{new Intl.NumberFormat('en-IN').format(props.data.population)}</Box></Box>
-                    <Box className={classes.details}>Region: <Box component='span'>{props.data.region}</Box></Box>
-                    <Box className={classes.details}>Capital: <Box component='span'>{props.data.capital}</Box></Box>
+                    <Box className={classes.title}><Typography variant='h6'>{props.data.name}</Typography></Box>                    
+                    <Typography className={classes.details} variant='body2'>Population: <Box component='span'>{new Intl.NumberFormat().format(props.data.population)}</Box></Typography>
+                    <Typography className={classes.details} variant='body2'>Region: <Box component='span'>{props.data.region}</Box></Typography>
+                    <Typography className={classes.details} variant='body2'>Capital: <Box component='span'>{props.data.capital}</Box></Typography>
                 </CardContent>
             </CardActionArea>
         </Card>

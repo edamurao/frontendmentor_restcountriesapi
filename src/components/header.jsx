@@ -1,5 +1,7 @@
 import { AppBar, Box, Button, makeStyles, Toolbar } from "@material-ui/core";
 import Brightness7Icon from '@material-ui/icons/Brightness7';
+import { changeTheme } from "../countryReducer";
+import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -35,12 +37,19 @@ const useStyles = makeStyles((theme) => ({
 
 export default function HeaderComponent(props) {
     const classes = useStyles();
+    const dispatch = useDispatch();
+
+    const handleChangeThemeClick = () => {
+        dispatch(changeTheme());
+    }
+
     return (
         <AppBar position='relative'>
             <Toolbar className={classes.toolbar}>
                 <Box className={classes.title}
                     fontWeight='fontWeightBold'>Where in the world?</Box>
                 <Button className={classes.button}
+                    onClick={handleChangeThemeClick}
                     startIcon={<Brightness7Icon />}>Dark Mode</Button>
             </Toolbar>
         </AppBar>
