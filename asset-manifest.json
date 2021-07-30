@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.js": "/static/js/main.f4b628c7.chunk.js",
-    "main.js.map": "/static/js/main.f4b628c7.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.c6b4a9e9.js",
-    "runtime-main.js.map": "/static/js/runtime-main.c6b4a9e9.js.map",
-    "static/js/2.745ecb80.chunk.js": "/static/js/2.745ecb80.chunk.js",
-    "static/js/2.745ecb80.chunk.js.map": "/static/js/2.745ecb80.chunk.js.map",
-    "static/js/3.5a4b841e.chunk.js": "/static/js/3.5a4b841e.chunk.js",
-    "static/js/3.5a4b841e.chunk.js.map": "/static/js/3.5a4b841e.chunk.js.map",
-    "index.html": "/index.html",
-    "static/js/2.745ecb80.chunk.js.LICENSE.txt": "/static/js/2.745ecb80.chunk.js.LICENSE.txt"
+    "main.js": "/frontendmentor_restcountriesapi/static/js/main.f4b628c7.chunk.js",
+    "main.js.map": "/frontendmentor_restcountriesapi/static/js/main.f4b628c7.chunk.js.map",
+    "runtime-main.js": "/frontendmentor_restcountriesapi/static/js/runtime-main.39ad4b47.js",
+    "runtime-main.js.map": "/frontendmentor_restcountriesapi/static/js/runtime-main.39ad4b47.js.map",
+    "static/js/2.745ecb80.chunk.js": "/frontendmentor_restcountriesapi/static/js/2.745ecb80.chunk.js",
+    "static/js/2.745ecb80.chunk.js.map": "/frontendmentor_restcountriesapi/static/js/2.745ecb80.chunk.js.map",
+    "static/js/3.5a4b841e.chunk.js": "/frontendmentor_restcountriesapi/static/js/3.5a4b841e.chunk.js",
+    "static/js/3.5a4b841e.chunk.js.map": "/frontendmentor_restcountriesapi/static/js/3.5a4b841e.chunk.js.map",
+    "index.html": "/frontendmentor_restcountriesapi/index.html",
+    "static/js/2.745ecb80.chunk.js.LICENSE.txt": "/frontendmentor_restcountriesapi/static/js/2.745ecb80.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.c6b4a9e9.js",
+    "static/js/runtime-main.39ad4b47.js",
     "static/js/2.745ecb80.chunk.js",
     "static/js/main.f4b628c7.chunk.js"
   ]
